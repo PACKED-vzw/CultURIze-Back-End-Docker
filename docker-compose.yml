@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  apache:
+    image: 'bitnami/apache:2.4.38'
+    restart: 'always'
+    ports:
+      - '801:8080'
+      - '443:8443'
+    volumes:
+      - ./apache-htaccess:/opt/bitnami/apache/htdocs
+
+  service:
+    build: ./service
+    restart: 'always'
+    tty: true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./service:/usr/src/app
+      - ./apache-htaccess:/usr/src/app/htaccess
+    env_file: .env
+    environment:
+      DEBUG: 'true'
+    command: su myuser -c "/usr/local/bin/python app.py"

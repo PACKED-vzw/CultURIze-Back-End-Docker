@@ -1,0 +1,32 @@
+1. Install Docker on your linux server
+https://www.tutorialspoint.com/docker/installing_docker_on_linux.htm
+
+2. Install docker-compose
+https://github.com/Yelp/docker-compose/blob/master/docs/install.md
+
+3. Start the containers which will do the redirection with the command
+> docker-compose docker-compose.yml
+
+4. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000
+Example:
+<VirtualHost example.com:80>
+    ProxyPreserveHost On
+    ProxyRequests Off
+    ServerName www.example.com
+    ServerAlias example.com
+    ProxyPass /my-webhook http://127.0.0.1:8000
+    ProxyPassReverse /my-webhook http://127.0.0.1:8000
+</VirtualHost>
+
+5. Add a webhook to github towards the "http://www.example.com/my-webhook"
+https://www.youtube.com/watch?v=S9cjO6V7EXg
+
+6. Add the domain for which you want to culture redirect to happen to Apache/Nginx
+<VirtualHost redirectdomain.com:80>
+    ProxyPreserveHost On
+    ProxyRequests Off
+    ServerName www.redirectdomain.com
+    ServerAlias redirectdomain.com
+    ProxyPass / http://127.0.0.1:8080
+    ProxyPassReverse / http://127.0.0.1:8080
+</VirtualHost>
