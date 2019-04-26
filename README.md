@@ -1,29 +1,34 @@
-## under construction
+
+
+# Culturize Docker configuration ( under construction )
 
 1. Install Docker on your linux server
-https://www.tutorialspoint.com/docker/installing_docker_on_linux.htm
 
 2. Install docker-compose
-https://github.com/Yelp/docker-compose/blob/master/docs/install.md
+
 3. clone this repository 'git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker'
 
-3. Start the containers which will do the redirection with the command
+4. Start the containers which will do the redirection with the command
 Deze command gaat de specifieke docker containers aanmaken 
 > docker-compose build
 
-4. docker-compose up -d
+5. docker-compose up -d
 Deze command gaat de docker containers starten. 
 
-4. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000
+6. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000
+
+For Nginx:
 Make a new configuration file in `/etc/nginx/conf.d/` and name it culturize.conf with these contents
 
-`server {
+```
+server {
     listen 80;
     listen [::]:80;
 
         location /github/ {
                 proxy_pass http://127.0.0.1:8000/;}
-        }`             
+        } 
+```          
 
 
 Apache2 Example:
@@ -41,6 +46,9 @@ This needs to be added in the apache2 configuration file at  '/etc/apache2/apach
 5. Add a webhook to github towards the "http://www.example.com/my-webhook"
 https://www.youtube.com/watch?v=S9cjO6V7EXg
 
+toevoegen van ip adres content type veranderen naar json
+
+(Uitleg toevoegen)
 6. Add the domain for which you want to culture redirect to happen to Apache/Nginx
 <VirtualHost redirectdomain.com:80>
     ProxyPreserveHost On
@@ -50,3 +58,9 @@ https://www.youtube.com/watch?v=S9cjO6V7EXg
     ProxyPass / http://127.0.0.1:8080
     ProxyPassReverse / http://127.0.0.1:8080
 </VirtualHost>
+
+
+Remove the configuration: 
+1.
+2.
+3.
