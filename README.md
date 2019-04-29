@@ -2,18 +2,16 @@
 
 # Culturize Docker configuration ( under construction )
 
-1. Install Docker on your linux server
+1. Install Docker. 
+Choose the right version for your system https://docs.docker.com/install/ 
 
-2. Install docker-compose
+2. Install Docker compose https://docs.docker.com/compose/install/ 
+ 
+3. clone this repository 'git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker' on your web-server. And enter the "Culturize-Back-End-Docker" directory.
 
-3. clone this repository 'git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker'
+4.Run the `docker-compose build` to create the docker containers. 
 
-4. Start the containers which will do the redirection with the command
-Deze command gaat de specifieke docker containers aanmaken 
-> docker-compose build
-
-5. docker-compose up -d
-Deze command gaat de docker containers starten. 
+5. Start the docker containers with `docker-compose up -d`
 
 6. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000
 
