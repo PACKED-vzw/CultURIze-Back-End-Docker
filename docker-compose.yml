@@ -19,8 +19,7 @@ services:
     volumes:
       - ./service:/usr/src/app
       - ./apache-htaccess:/usr/src/app/htaccess
-    privileged: true
     env_file: .env
     environment:
       DEBUG: 'true'
-    command: su myuser -c "/usr/local/bin/python app.py"
+    command: /usr/local/bin/python app.py
