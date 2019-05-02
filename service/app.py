@@ -43,7 +43,7 @@ def endpoint():
             Repo.clone_from(github_url, htaccess_dir)
         except Exception as e:
             print(e)
-        
+
         print('pull done')
         return jsonify({
             "Success": True,
