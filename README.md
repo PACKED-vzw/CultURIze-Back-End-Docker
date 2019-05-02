@@ -27,19 +27,22 @@ server {
 ```          
 
 
-Apache2 Example:
+For Apache2:
+Make a new configuration file in `/etc/apache2/sites-available` and name it culturize.conf with thesse contents
 ```
-<VirtualHost example.com:80>
+<VirtualHost *:80>
     ProxyPreserveHost On
     ProxyRequests Off
-    ServerName www.example.com
-    ServerAlias example.com
-    ProxyPass /my-webhook http://127.0.0.1:8000
-    ProxyPassReverse /my-webhook http://127.0.0.1:8000
+
+    ProxyPass /github/ http://127.0.0.1:8000/
+    ProxyPassReverse /github/ http://127.0.0.1:8000/
 </VirtualHost>
+
 ```
 
-This needs to be added in the apache2 configuration file at  '/etc/apache2/apache2.conf' 
+> Note, for Apache, enable http_proxy mod by running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
+
+> Note, do not forget to remove the default configuration file for Nginx/Apache if doing a fresh install. 
 
 7. Our next step is to add our newly created webhook `http://SERVER_IP/github` to github. 
 To achieve this, go to your github project, in the project menu navigate to settings.
@@ -57,10 +60,13 @@ To check if this work you can push a change to your repository and you should no
 on the server in your repository the folder apache-htaccess getting filled with information.
 
 8. Our last step is to configure all traffic which is not /github/ towards our new redirection file uploaded
- from github. You can do this by adding the following lines to the folder `/etc/nginx/conf.d/` 
- and name it culturize.conf. This rule forwards all traffic which is not /github/ towards
- port 801 of our local machine, where our apache culturize redirection rules resides.
+ from github. 
  
+
+For nginx:
+You can do this by adding the following lines to the file `/etc/nginx/conf.d/culturize.conf`. This rule forwards all traffic which is not /github/ towards
+port 801 of our local machine, where our apache culturize redirection rules resides.
+
 ```
 server {
     listen 80;
@@ -74,6 +80,21 @@ server {
            proxy_pass http://127.0.0.1:801/;
     }
 }
+```
+
+
+For Apache2:
+```
+<VirtualHost *:80>
+    ProxyPreserveHost On
+    ProxyRequests Off
+
+    ProxyPass /github/ http://127.0.0.1:8000/
+    ProxyPassReverse /github/ http://127.0.0.1:8000/
+
+    ProxyPass / http://127.0.0.1:801/
+    ProxyPassReverse / http://127.0.0.1:801/
+</VirtualHost>
 ```
 
 
