@@ -21,6 +21,7 @@ def endpoint():
         htaccess_dir = '/usr/src/app/htaccess/'
 
         # delete all content of the htaccess directory
+        print('delete all content of the htaccess directory')
         for the_file in os.listdir(htaccess_dir):
             file_path = os.path.join(htaccess_dir, the_file)
             try:
@@ -29,18 +30,21 @@ def endpoint():
             except Exception as e:
                 print(e)
 
+        print('remove the git folder if it exists')
         # remove the git folder if it exists
         try:
             shutil.rmtree(os.path.join(htaccess_dir, '.git'))
         except FileNotFoundError:
             print('.git folder does not exist/has not been found, thus it cannot be deleted')
 
+        print('clone the repo to the htaccess')
         # clone the repo to the htaccess
         try:
             Repo.clone_from(github_url, htaccess_dir)
         except Exception as e:
             print(e)
-
+        
+        print('pull done')
         return jsonify({
             "Success": True,
         })
