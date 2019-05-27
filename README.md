@@ -6,7 +6,7 @@ Choose the right version for your system https://docs.docker.com/install/
  
 3. clone this repository `git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
 
-4. Run the `docker-compose build` to create the docker containers. 
+4. Run the `docker-compose build` command to create the docker containers. 
 
 5. Start the docker containers with `docker-compose up -d`
 
