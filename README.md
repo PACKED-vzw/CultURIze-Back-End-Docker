@@ -10,10 +10,10 @@ Choose the right version for your system https://docs.docker.com/install/
 
 5. Start the docker containers with `docker-compose up -d`
 
-6. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000
+6. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github. 
 
 For Nginx:
-Make a new configuration file in `/etc/nginx/conf.d/` and name it culturize.conf with these contents
+Make a new configuration file in `/etc/nginx/sites-available/` and name it culturize.conf with these contents
 
 ```
 server {
@@ -23,9 +23,17 @@ server {
     location /github/ {
             proxy_pass http://127.0.0.1:8000/;
     }
+
+    location / {
+           proxy_pass http://127.0.0.1:801/;
+    }
 } 
 ```          
-
+Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/
+```
+cd /etc/nginx/sites-enabled
+sudo ln -s ../sites-available/culturize.conf .
+``` 
 
 For Apache2:
 Make a new configuration file in `/etc/apache2/sites-available` and name it culturize.conf with thesse contents
@@ -36,10 +44,17 @@ Make a new configuration file in `/etc/apache2/sites-available` and name it cult
 
     ProxyPass /github/ http://127.0.0.1:8000/
     ProxyPassReverse /github/ http://127.0.0.1:8000/
+
+    ProxyPass / http://127.0.0.1:801/
+    ProxyPassReverse / http://127.0.0.1:801/
 </VirtualHost>
 
 ```
-
+Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
+```
+cd /etc/apache2/sites-enabled
+sudo ln -s ../sites-available/culturize.conf .
+``` 
 > Note, for Apache, enable http_proxy mod by running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
 
 > Note, do not forget to remove the default configuration file for Nginx/Apache if doing a fresh install. 
@@ -56,9 +71,9 @@ then 'add a webhook'. On this page you can fill in:
 Once this is saved each time you will push to your repository a POST method will be
 issued to your webhook with informations regarding the push event.
 
-To check if this work you can push a change to your repository and you should notice
+To check if it works you can push a change to your repository and you should notice
 on the server in your repository the folder apache-htaccess getting filled with information.
-
+<!--
 8. Our last step is to configure all traffic which is not /github/ towards our new redirection file uploaded
  from github. 
  
@@ -96,7 +111,7 @@ For Apache2:
     ProxyPassReverse / http://127.0.0.1:801/
 </VirtualHost>
 ```
-
+-->
 
 ****
 # Remove the configuration
