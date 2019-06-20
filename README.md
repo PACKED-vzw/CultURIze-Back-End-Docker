@@ -59,7 +59,7 @@ sudo ln -s ../sites-available/culturize.conf .
 
 > Note, do not forget to remove the default configuration file for Nginx/Apache if doing a fresh install. 
 
-7. Our next step is to add our newly created webhook `http://SERVER_IP/github` to github. 
+7. Our next step is to add our newly created webhook `http://SERVER_IP/github/` to github. 
 To achieve this, go to your github project, in the project menu navigate to settings.
 Then in the your settings menu, situated on the left of the screen, select webhooks
 then 'add a webhook'. On this page you can fill in:
