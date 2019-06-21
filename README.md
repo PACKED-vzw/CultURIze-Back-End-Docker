@@ -6,7 +6,7 @@ Choose the right version for your system https://docs.docker.com/install/
 
 3. Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker your-user`. 
 
-4. clone this repository `git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
+4. Clone this repository `git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
 
 5. Run the `docker-compose build` command to create the docker containers. 
 
