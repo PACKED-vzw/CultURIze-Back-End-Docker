@@ -3,14 +3,16 @@
 Choose the right version for your system https://docs.docker.com/install/ 
 
 2. Install Docker compose https://docs.docker.com/compose/install/ 
- 
-3. clone this repository `git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
 
-4. Run the `docker-compose build` command to create the docker containers. 
+3. Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker your-user`. 
 
-5. Start the docker containers with `docker-compose up -d`
+4. clone this repository `git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
 
-6. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github. 
+5. Run the `docker-compose build` command to create the docker containers. 
+
+6. Start the docker containers with `docker-compose up -d`
+
+7. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github. 
 
 For Nginx:
 Make a new configuration file in `/etc/nginx/sites-available/` and name it culturize.conf with these contents
