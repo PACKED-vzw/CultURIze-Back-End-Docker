@@ -22,7 +22,7 @@ def endpoint():
 
         print('clone the repo to the htaccess')
         # clone the repo to the htaccess
-        if not os.isdir(htaccess_dir):
+        if not os.path.isdir(htaccess_dir):
             try:
                 git.Repo.clone_from(github_url, htaccess_dir)
                 
