@@ -42,7 +42,7 @@ def endpoint():
         else:
             try:
                 git.Repo.clone_from(github_url, temp_dir)
-                shutil.copytree(temp_dir,htaccess_dir,)
+                shutil.copytree(temp_dir,htaccess_dir,False,None,copy2,False,True)
                 
             except Exception as e:
                 print(e)
