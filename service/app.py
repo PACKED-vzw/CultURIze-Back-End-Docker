@@ -16,13 +16,14 @@ def endpoint():
     """ All requests from a github webhook should be redirected here."""
     try:
         json = request.get_json(silent=True)
-        github_url = json['repository']['html_url']
+        github_url = json['repository']['clone_url']
 
         htaccess_dir = '/usr/src/app/htaccess/'
 
         print('clone the repo to the htaccess')
         # clone the repo to the htaccess
         if not os.path.isdir(htaccess_dir):
+            print ('not a dir')
             try:
                 git.Repo.clone_from(github_url, htaccess_dir)
                 
@@ -32,6 +33,7 @@ def endpoint():
         else:
             try:
                 git.Repo(htaccess_dir).remotes.origin.pull()
+
             except Exception as e:
                 print(e)
 
