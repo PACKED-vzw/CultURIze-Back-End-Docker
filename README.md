@@ -65,7 +65,7 @@ sudo ln -s ../sites-available/culturize.conf .
 To achieve this, go to your github project, in the project menu navigate to settings.
 Then in the your settings menu, situated on the left of the screen, select webhooks
 then 'add a webhook'. On this page you can fill in:
- * **payload url :** with your newly created webhook url `http://SERVER_IP/github`
+ * **payload url :** with your newly created webhook url `http://SERVER_IP/github/`
  * **content-type :** can be set to `application/json`
  * **secret :** may be left empty
  * **Which events would you like to trigger this webhook? :** set this to 'just push events'
