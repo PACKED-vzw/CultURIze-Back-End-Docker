@@ -32,7 +32,7 @@ def endpoint():
             except Exception as e:
                 print(e)
         
-        elif git.Repo(htaccess_dir).git_dir:
+        elif os.path.isdir(os.path.join(htaccess_dir, '.git')):
             try:
                 git.Repo(htaccess_dir).remotes.origin.pull()
 
