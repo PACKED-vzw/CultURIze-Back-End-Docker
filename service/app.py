@@ -7,6 +7,7 @@ import os, shutil
 import sys
 import settings
 import sys
+import glob
 
 app = Flask(__name__)
 
@@ -41,8 +42,8 @@ def endpoint():
         else:
             try:
                 git.Repo.clone_from(github_url, temp_dir)
-                shutil.copytree(temp_dir,htaccess_dir)
-                shutil.rmtree(temp_dir,True)
+                shutil.copytree(temp_dir,htaccess_dir,)
+                
             except Exception as e:
                 print(e)
 
@@ -50,6 +51,9 @@ def endpoint():
         return jsonify({
             "Success": True,
         })
+
+        shutil.rmtree(temp_dir, True)
+
     except Exception as e:
         print(e)
         abort(500)
