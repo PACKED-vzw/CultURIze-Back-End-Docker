@@ -19,6 +19,8 @@ def endpoint():
         github_url = json['repository']['clone_url']
 
         htaccess_dir = '/usr/src/app/htaccess/'
+        os.unlink(os.path.join(htaccess_dir, '.init'))
+        temp_dir = '/usr/src/app/temp'
 
         print('clone the repo to the htaccess')
         # clone the repo to the htaccess
@@ -30,10 +32,18 @@ def endpoint():
             except Exception as e:
                 print(e)
         
-        else:
+        elif git.Repo(htaccess_dir).git_dir:
             try:
                 git.Repo(htaccess_dir).remotes.origin.pull()
 
+            except Exception as e:
+                print(e)
+        
+        else:
+            try:
+                git.Repo.clone_from(github_url, temp_dir)
+                shutil.copytree(temp_dir,htaccess_dir)
+                shutil.rmtree(temp_dir,True)
             except Exception as e:
                 print(e)
 
