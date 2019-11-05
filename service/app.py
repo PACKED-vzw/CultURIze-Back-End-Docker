@@ -19,7 +19,6 @@ def endpoint():
         github_url = json['repository']['clone_url']
 
         htaccess_dir = '/usr/src/app/htaccess/'
-        os.unlink(os.path.join(htaccess_dir, '.init'))
         temp_dir = '/usr/src/app/temp'
 
         print('clone the repo to the htaccess')
