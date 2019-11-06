@@ -11,7 +11,19 @@ import glob
 
 app = Flask(__name__)
 
+#finds out of a folder is a git folder
+def is_git_repo(folder):
+    return os.path.isdir(os.path.join(folder, '.git'))
 
+#removes folder and its content
+def remove_folder(folder):
+    for file in os.listdir(folder):
+        filepath = os.path.join(folder,file)
+        if os.path.isfile(file):
+            os.unlink(file)
+    os.rmdir(folder)
+
+#route of web app
 @app.route('/', methods=['POST'])
 def endpoint():
     """ All requests from a github webhook should be redirected here."""
@@ -22,37 +34,38 @@ def endpoint():
         htaccess_dir = '/usr/src/app/htaccess/'
         temp_dir = '/usr/src/app/temp'
 
-        print('clone the repo to the htaccess')
         # clone the repo to the htaccess
-        if not os.path.isdir(htaccess_dir):
-            print ('not a dir')
-            try:
-                git.Repo.clone_from(github_url, htaccess_dir)
-                
-            except Exception as e:
-                print(e)
-        
-        elif os.path.isdir(os.path.join(htaccess_dir, '.git')):
+        if is_git_repo(htaccess_dir):
+            print('htaccess is a git repository')
+            print('pull the git repository')
             try:
                 git.Repo(htaccess_dir).remotes.origin.pull()
+                print('pull done')
 
             except Exception as e:
                 print(e)
-        
+    
         else:
             try:
+                print('htaccess is not a git folder')
+                print('clone the repo to a temporary folder')
                 git.Repo.clone_from(github_url, temp_dir)
+                print('clone done')
+                print('copy files of temporary folder to htaccess')
                 shutil.copytree(temp_dir,htaccess_dir,dirs_exist_ok=True)
-                
+                remove_folder(temp_dir)
+                print('temporary folder removed')
+                print('done')
             except Exception as e:
                 print(e)
 
         print('pull done')
         return jsonify({
             "Success": True,
+            "Files added": json['head_commit']['added'],
+            "Files removed": json['head_commit']['removed'],
+            "Files modified": json['head_commit']['modified']
         })
-
-        shutil.rmtree(temp_dir, True)
 
     except Exception as e:
         print(e)
