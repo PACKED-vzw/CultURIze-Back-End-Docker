@@ -19,8 +19,8 @@ def is_git_repo(folder):
 def remove_folder(folder):
     for file in os.listdir(folder):
         filepath = os.path.join(folder,file)
-        if os.path.isfile(file):
-            os.unlink(file)
+        if os.path.isfile(filepath):
+            os.remove(filepath)
     os.rmdir(folder)
 
 #route of web app
