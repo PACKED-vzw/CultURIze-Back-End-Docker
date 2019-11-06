@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, abort
-from werkzeug.contrib.profiler import ProfilerMiddleware, MergeStream
+from werkzeug.middleware.profiler import ProfilerMiddleware
 from werkzeug.debug import get_current_traceback
 import git
 
@@ -51,11 +51,10 @@ def endpoint():
                 shutil.copytree(temp_dir,htaccess_dir,dirs_exist_ok=True)
                 remove_folder(temp_dir)
                 print('temporary folder removed')
-                print('done')
             except Exception as e:
                 print(e)
 
-        print('pull done')
+        print('done')
         return jsonify({
             "Success": True,
             "Files added": json['head_commit']['added'],
