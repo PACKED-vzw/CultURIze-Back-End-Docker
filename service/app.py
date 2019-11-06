@@ -17,12 +17,7 @@ def is_git_repo(folder):
 
 #removes folder and its content
 def remove_folder(folder):
-    for file in os.listdir(folder):
-        filepath = os.path.join(folder,file)
-        print(filepath)
-        if os.path.isfile(filepath):
-            os.unlink(filepath)
-    os.rmdir(folder)
+    shutil.rmtree(folder)
 
 #route of web app
 @app.route('/', methods=['POST'])
