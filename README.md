@@ -16,7 +16,7 @@ https://docs.docker.com/compose/install/
 
 ### Configuration
 Before starting:
-Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker your-user`. 
+Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker $USER`. 
 
 1. Fork this repository to your account.
 
