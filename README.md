@@ -1,65 +1,89 @@
+---
+attachments: [culturize.apache.conf, culturize.conf]
+title: Culturize Docker configuration
+created: '2019-11-05T13:18:44.970Z'
+modified: '2019-11-07T14:33:19.064Z'
+---
+
 # Culturize Docker configuration
-1. Install Docker. 
+
+## Requirements 
+
+### Github account
+
+### Git 
+Get [git](https://git-scm.com/downloads)
+
+### Docker. 
 Choose the right version for your system https://docs.docker.com/install/ 
 
-2. Install Docker compose https://docs.docker.com/compose/install/ 
+### Docker-Compose
+https://docs.docker.com/compose/install/ 
 
-3. Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker your-user`. 
+### Configuration
+Before starting:
+Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker your-user`. 
 
-4. Clone this repository `git clone https://github.com/PACKED-vzw/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
+1. Fork this repository to your account.
 
-5. Run the `docker-compose build` command to create the docker containers. 
+1. Clone the repository `git clone https://github.com/username/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
 
-6. Start the docker containers with `docker-compose up -d`
+### Nginx or Apache ?
+Depending on what webserver you are running, choose the right configuration.
 
-7. Configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github. 
+### Nginx
 
-For Nginx:
-Make a new configuration file in `/etc/nginx/sites-available/` and name it culturize.conf with these contents
+1. Remove or rename the default configuration file for Nginx `(/etc/nginx/sites-enables/default.conf)` if doing this set-up for the first time.
 
-```
-server {
-    listen 80;
-    listen [::]:80;
 
-    location /github/ {
-            proxy_pass http://127.0.0.1:8000/;
-    }
+- `sudo rm /etc/nginx/sites-enabled/default.conf`
+or
 
-    location / {
-           proxy_pass http://127.0.0.1:801/;
-    }
-} 
-```          
-Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/
-```
-cd /etc/nginx/sites-enabled
-sudo ln -s ../sites-available/culturize.conf .
-``` 
+- `sudo mv /etc/nginx/sites-enabled/default.conf /etc/nginx/sites-enabled/default.conf.bak`
 
-For Apache2:
-Make a new configuration file in `/etc/apache2/sites-available` and name it culturize.conf with thesse contents
-```
-<VirtualHost *:80>
-    ProxyPreserveHost On
-    ProxyRequests Off
 
-    ProxyPass /github/ http://127.0.0.1:8000/
-    ProxyPassReverse /github/ http://127.0.0.1:8000/
+2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/nginx-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
+- `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
-    ProxyPass / http://127.0.0.1:801/
-    ProxyPassReverse / http://127.0.0.1:801/
-</VirtualHost>
+3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
 
-```
-Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
-```
-cd /etc/apache2/sites-enabled
-sudo ln -s ../sites-available/culturize.conf .
-``` 
+- `cd /etc/nginx/sites-enabled`
+- `sudo ln -s ../sites-available/culturize.conf .`
+    
+4. Run the `docker-compose build` command from inside the cloned repository to create the docker containers. 
+
+5. Start the docker containers with `docker-compose up -d`
+
+ <!-- (configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github.)
+-->
+
+### Apache
+
+1. Remove or rename the default configuration file for Apache2 `(/etc/apache2/sites-enables/000-default.conf)` 
+
+- `sudo rm /apache2/nginx/sites-enabled/000-default.conf`
+or
+
+- `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/nginx/sites-enabled/000-default.conf.bak`
+
+2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
+- `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+
+3. Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
+
+- `cd /etc/apache2/sites-enabled`
+- `sudo ln -s ../sites-available/culturize.conf .`
+ 
+4. Run the `docker-compose build` command from inside the cloned repository to create the docker containers. 
+
+5. Start the docker containers with `docker-compose up -d`
+
+
 > Note, for Apache, enable http_proxy mod by running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
 
 > Note, do not forget to remove the default configuration file for Nginx/Apache if doing a fresh install. 
+
+### Configuring the Webhook
 
 7. Our next step is to add our newly created webhook `http://SERVER_IP/github/` to github. 
 To achieve this, go to your github project, in the project menu navigate to settings.
@@ -116,7 +140,8 @@ For Apache2:
 -->
 
 ****
-# Remove the configuration
+# Removing the configuration
 1. Run the command `docker-compose stop` inside the repository folder of the culturize docker
 2. Run the command `docker-compose rm` inside the repository folder
 3. Run the command `docker-compose rmi` inside the repository folder
+
