@@ -3,6 +3,7 @@
 ## Requirements 
 
 ### Github account
+https://github.com/join
 
 ### Git 
 Get [git](https://git-scm.com/downloads)
