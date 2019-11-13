@@ -176,7 +176,7 @@ For Apache2:
 -->
 
 ****
-# Removing the configuration
+## Removing the configuration
 1. Run the command `docker-compose stop` inside the repository folder of the culturize docker
 2. Run the command `docker-compose rm` inside the repository folder
 3. Run the command `docker-compose rmi` inside the repository folder
