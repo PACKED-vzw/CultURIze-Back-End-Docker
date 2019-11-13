@@ -56,10 +56,10 @@ or
 
 1. Remove or rename the default configuration file for Apache2 `(/etc/apache2/sites-enables/000-default.conf)` 
 
-- `sudo rm /apache2/nginx/sites-enabled/000-default.conf`
+- `sudo rm /apache2/sites-enabled/000-default.conf`
 or
 
-- `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/nginx/sites-enabled/000-default.conf.bak`
+- `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.bak`
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
 - `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/apache-conf/culturize.conf /etc/apache2/sites-available/`
