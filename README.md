@@ -77,7 +77,7 @@ or
 ### For Apache, enable http_proxy mod:
 By running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
 [More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04)
-=======
+
 - `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
 3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
