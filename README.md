@@ -37,6 +37,7 @@ or
 
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/nginx-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
+<<<<<<< HEAD
 - `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
 3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
@@ -76,6 +77,47 @@ or
 ### For Apache, enable http_proxy mod:
 By running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
 [More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04)
+=======
+- `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+
+3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
+
+- `cd /etc/nginx/sites-enabled`
+- `sudo ln -s ../sites-available/culturize.conf .`
+    
+4. Run the `docker-compose build` command from inside the cloned repository to create the docker containers. 
+
+5. Start the docker containers with `docker-compose up -d`
+
+ <!-- (configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github.)
+-->
+
+### Apache
+
+1. Remove or rename the default configuration file for Apache2 `(/etc/apache2/sites-enables/000-default.conf)` 
+
+- `sudo rm /apache2/nginx/sites-enabled/000-default.conf`
+or
+
+- `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/nginx/sites-enabled/000-default.conf.bak`
+
+2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
+- `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+
+3. Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
+
+- `cd /etc/apache2/sites-enabled`
+- `sudo ln -s ../sites-available/culturize.conf .`
+ 
+4. Run the `docker-compose build` command from inside the cloned repository to create the docker containers. 
+
+5. Start the docker containers with `docker-compose up -d`
+
+
+> Note, for Apache, enable http_proxy mod by running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
+>>>>>>> 8989d2dcc343abd0b4737d6dc2db798368761ec5
+
+### Configuring the Webhook
 
 ### Configuring the Webhook
 

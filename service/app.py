@@ -1,53 +1,67 @@
 from flask import Flask, request, jsonify, abort
-from werkzeug.contrib.profiler import ProfilerMiddleware, MergeStream
+from werkzeug.middleware.profiler import ProfilerMiddleware
 from werkzeug.debug import get_current_traceback
-from git import Repo
+import git
 
 import os, shutil
 import sys
 import settings
 import sys
+import glob
 
 app = Flask(__name__)
 
+#finds out of a folder is a git folder
+def is_git_repo(folder):
+    return os.path.isdir(os.path.join(folder, '.git'))
 
+#removes folder and its content
+def remove_folder(folder):
+    shutil.rmtree(folder)
+
+#route of web app
 @app.route('/', methods=['POST'])
 def endpoint():
     """ All requests from a github webhook should be redirected here."""
     try:
         json = request.get_json(silent=True)
-        github_url = json['repository']['html_url']
+        github_url = json['repository']['clone_url']
 
         htaccess_dir = '/usr/src/app/htaccess/'
+        temp_dir = '/usr/src/app/temp'
 
-        # delete all content of the htaccess directory
-        print('delete all content of the htaccess directory')
-        for the_file in os.listdir(htaccess_dir):
-            file_path = os.path.join(htaccess_dir, the_file)
+        # clone the repo to the htaccess
+        if is_git_repo(htaccess_dir):
+            print('htaccess is a git repository')
+            print('pull the git repository')
             try:
-                if os.path.isfile(file_path):
-                    os.unlink(file_path)
+                git.Repo(htaccess_dir).remotes.origin.pull()
+                print('pull done')
+
+            except Exception as e:
+                print(e)
+    
+        else:
+            try:
+                print('htaccess is not a git folder')
+                print('clone the repo to a temporary folder')
+                git.Repo.clone_from(github_url, temp_dir)
+                print('clone done')
+                print('copy files of temporary folder to htaccess')
+                shutil.copytree(temp_dir,htaccess_dir,dirs_exist_ok=True)
+                remove_folder(temp_dir)
+                print('temporary folder removed')
             except Exception as e:
                 print(e)
 
-        print('remove the git folder if it exists')
-        # remove the git folder if it exists
-        try:
-            shutil.rmtree(os.path.join(htaccess_dir, '.git'))
-        except FileNotFoundError:
-            print('.git folder does not exist/has not been found, thus it cannot be deleted')
-
-        print('clone the repo to the htaccess')
-        # clone the repo to the htaccess
-        try:
-            Repo.clone_from(github_url, htaccess_dir)
-        except Exception as e:
-            print(e)
-
-        print('pull done')
+        print('done')
         return jsonify({
             "Success": True,
+            "Files added": json['head_commit']['added'],
+            "Files removed": json['head_commit']['removed'],
+            "Files modified": json['head_commit']['modified']
         })
+
     except Exception as e:
         print(e)
         abort(500)

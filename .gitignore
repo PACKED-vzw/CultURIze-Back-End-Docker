@@ -1,4 +1,6 @@
 apache-htaccess/*
 !apache-htaccess/.init
 .idea/*
+.vscode/*
+culturize/*
 
