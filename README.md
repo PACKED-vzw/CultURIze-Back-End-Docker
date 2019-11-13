@@ -37,7 +37,7 @@ or
 
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/nginx-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
-<<<<<<< HEAD
+
 - `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
 3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
