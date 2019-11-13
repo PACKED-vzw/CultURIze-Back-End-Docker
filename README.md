@@ -2,16 +2,18 @@
 
 ## Requirements 
 
-### Github account
+* Github account
 https://github.com/join
 
-### Git 
+* Git 
 Get [git](https://git-scm.com/downloads)
 
-### Docker. 
+* Clone this [repository](https://github.com/PACKED-vzw/CultURIze-Back-End-Docker) to your webserver
+
+* Docker
 Choose the right version for your system https://docs.docker.com/install/ 
 
-### Docker-Compose
+* Docker-Compose 
 https://docs.docker.com/compose/install/ 
 
 ### Configuration
