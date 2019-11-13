@@ -113,15 +113,12 @@ or
 
 5. Start the docker containers with `docker-compose up -d`
 
-
-> Note, for Apache, enable http_proxy mod by running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
->>>>>>> 8989d2dcc343abd0b4737d6dc2db798368761ec5
-
-### Configuring the Webhook
+### Note, for Apache, enable http_proxy mod:
+By running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
 
 ### Configuring the Webhook
 
-7. Our next step is to add our newly created webhook `http://SERVER_IP/github/` to github. 
+Our next step is to add our newly created webhook `http://SERVER_IP/github/` to github. 
 To achieve this, go to your github project, in the project menu navigate to settings.
 Then in the your settings menu, situated on the left of the screen, select webhooks
 then 'add a webhook'. On this page you can fill in:
