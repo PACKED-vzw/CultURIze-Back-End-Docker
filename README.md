@@ -1,15 +1,9 @@
----
-attachments: [culturize.apache.conf, culturize.conf]
-title: Culturize Docker configuration
-created: '2019-11-05T13:18:44.970Z'
-modified: '2019-11-07T14:33:19.064Z'
----
-
 # Culturize Docker configuration
 
 ## Requirements 
 
 ### Github account
+https://github.com/join
 
 ### Git 
 Get [git](https://git-scm.com/downloads)
@@ -22,7 +16,7 @@ https://docs.docker.com/compose/install/
 
 ### Configuration
 Before starting:
-Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker your-user`. 
+Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker $USER`. 
 
 1. Fork this repository to your account.
 
@@ -43,7 +37,7 @@ or
 
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/nginx-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
-- `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+- `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
 3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
 
@@ -67,7 +61,7 @@ or
 - `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/nginx/sites-enabled/000-default.conf.bak`
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
-- `sudo cp /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+- `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/apache-conf/culturize.conf /etc/apache2/sites-available/`
 
 3. Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
 
@@ -79,9 +73,9 @@ or
 5. Start the docker containers with `docker-compose up -d`
 
 
-> Note, for Apache, enable http_proxy mod by running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
-
-> Note, do not forget to remove the default configuration file for Nginx/Apache if doing a fresh install. 
+### For Apache, enable http_proxy mod:
+By running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
+[More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04)
 
 ### Configuring the Webhook
 
@@ -144,4 +138,3 @@ For Apache2:
 1. Run the command `docker-compose stop` inside the repository folder of the culturize docker
 2. Run the command `docker-compose rm` inside the repository folder
 3. Run the command `docker-compose rmi` inside the repository folder
-
