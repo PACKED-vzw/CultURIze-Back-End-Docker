@@ -2,75 +2,52 @@
 
 ## Requirements 
 
-* Github account
-https://github.com/join
+* [Git](https://git-scm.com/downloads)
+* [Docker](https://docs.docker.com/install/)
+* [Docker-Compose](https://docs.docker.com/compose/install/) 
 
-* Git 
-Get [git](https://git-scm.com/downloads)
-
-* Clone this [repository](https://github.com/PACKED-vzw/CultURIze-Back-End-Docker) to your webserver
-
-* Docker
-Choose the right version for your system https://docs.docker.com/install/ 
-
-* Docker-Compose 
-https://docs.docker.com/compose/install/ 
-
-### Configuration
+## Configuration
 Before starting:
 Either add your user to the docker group on the system or run every next docker command in the README as sudo. To add your user to the docker group run `sudo usermod -aG docker $USER`. 
 
-1. Fork this repository to your account.
+1. Clone this [repository](https://github.com/PACKED-vzw/CultURIze-Back-End-Docker) to your webserver: 
+ `git clone https://github.com/username/CultURIze-Back-End-Docker` 
+ 
+ 2. And enter the directory of the cloned repository: `cd CultURIze-Back-End-Docker`
 
-1. Clone the repository `git clone https://github.com/username/CultURIze-Back-End-Docker` on your web-server. And enter the "Culturize-Back-End-Docker" directory.
-
-### Nginx or Apache ?
+### Apache or Nginx?
 Depending on what webserver you are running, choose the right configuration.
 
-### Nginx
+#### Nginx
 
 1. Remove or rename the default configuration file for Nginx `(/etc/nginx/sites-enables/default.conf)` if doing this set-up for the first time.
-
-
-- `sudo rm /etc/nginx/sites-enabled/default.conf`
-or
-
-- `sudo mv /etc/nginx/sites-enabled/default.conf /etc/nginx/sites-enabled/default.conf.bak`
-
+    - `sudo rm /etc/nginx/sites-enabled/default.conf` or
+    - `sudo mv /etc/nginx/sites-enabled/default.conf /etc/nginx/sites-enabled/default.conf.bak`
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/nginx-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
-
-- `sudo mv /home/user/CultURIze-Back-End-Docker/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+    - `sudo mv /home/user/CultURIze-Back-End-Docker/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
 3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
-
-- `cd /etc/nginx/sites-enabled`
-- `sudo ln -s ../sites-available/culturize.conf .`
+    - `cd /etc/nginx/sites-enabled`
+    - `sudo ln -s ../sites-available/culturize.conf .`
     
 4. Run the `docker-compose build` command from inside the cloned repository to create the docker containers. 
 
 5. Start the docker containers with `docker-compose up -d`
 
- <!-- (configure your Apache/Nginx to redirect a webhook url to the localhost:8000 and configure all traffic which is not /github/ towards our new redirection file uploaded from github.)
--->
-
-### Apache
+#### Apache
 
 1. Remove or rename the default configuration file for Apache2 `(/etc/apache2/sites-enables/000-default.conf)` 
-
-- `sudo rm /apache2/sites-enabled/000-default.conf`
-or
-
-- `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.bak`
+    - `sudo rm /apache2/sites-enabled/000-default.conf` or
+    - `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.bak`
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
-- `sudo mv /home/user/CultURIze-Back-End-Docker/docs/apache2-conf/culturize.conf /etc/apache2/sites-available/`
+    - `sudo mv /home/user/CultURIze-Back-End-Docker/docs/apache2-conf/culturize.conf /etc/apache2/sites-available/`
 
 3. Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
-
-- `cd /etc/apache2/sites-enabled`
-- `sudo ln -s ../sites-available/culturize.conf .`
- 
+    - `cd /etc/apache2/sites-enabled`
+    - `sudo ln -s ../sites-available/culturize.conf .`
+    
 4. Run the `docker-compose build` command from inside the cloned repository to create the docker containers. 
 
 5. Start the docker containers with `docker-compose up -d`
