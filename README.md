@@ -5,6 +5,7 @@
 * [Git](https://git-scm.com/downloads)
 * [Docker](https://docs.docker.com/install/)
 * [Docker-Compose](https://docs.docker.com/compose/install/) 
+* Server with [Apache2](https://httpd.apache.org/) or [Nginx](https://nginx.org/). The server needs to have at least a public [IP address](https://en.wikipedia.org/wiki/IP_address)
 
 ## Configuration
 Before starting:
@@ -76,6 +77,9 @@ issued to your webhook with informations regarding the push event.
 
 To check if it works you can push a change to your repository and you should notice
 on the server in your repository the folder apache-htaccess getting filled with the htaccess-files.
+
+## Start creating PIDs with the CultURIze tool
+You're all set now! Everytime you'll upload PIDs to the repository for which you congured the webhook, it will automatically be published at [http://your-server-IP/$subdirectory/$PID](http://your-server-IP/subdirectory/PID), e.g. http://example.org/rembrand/work/1
 
 ## Removing the configuration
 1. Run the command `docker-compose stop` inside the repository folder of the culturize docker
