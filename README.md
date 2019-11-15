@@ -40,7 +40,7 @@ or
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/nginx-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
 
-- `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
+- `sudo mv /home/user/CultURIze-Back-End-Docker/docs/nginx-conf/culturize.conf /etc/nginx/sites-available/`
 
 3. Create symbolic link from /etc/nginx/sites-available to /etc/nginx/sites-enabled/ like so:
 
@@ -64,7 +64,7 @@ or
 - `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.bak`
 
 2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
-- `sudo mv /home/user/CultURIze-Back-End-Docker/tree/master/docs/apache-conf/culturize.conf /etc/apache2/sites-available/`
+- `sudo mv /home/user/CultURIze-Back-End-Docker/docs/apache2-conf/culturize.conf /etc/apache2/sites-available/`
 
 3. Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
 
@@ -75,10 +75,13 @@ or
 
 5. Start the docker containers with `docker-compose up -d`
 
+6. enable http_proxy mod and restart your webserver by typing following commands in your terminal ([More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04))
 
-### For Apache, enable http_proxy mod:
-By running `a2enmod proxy` abd `a2enmod proxy_http` in your terminal
-[More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04)
+```bash
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo systemctl restart apache2.service
+```
 
 ### Configuring the Webhook
 
@@ -95,48 +98,8 @@ Once this is saved each time you will push to your repository a POST method will
 issued to your webhook with informations regarding the push event.
 
 To check if it works you can push a change to your repository and you should notice
-on the server in your repository the folder apache-htaccess getting filled with information.
-<!--
-8. Our last step is to configure all traffic which is not /github/ towards our new redirection file uploaded
- from github. 
- 
+on the server in your repository the folder apache-htaccess getting filled with the htaccess-files.
 
-For nginx:
-You can do this by adding the following lines to the file `/etc/nginx/conf.d/culturize.conf`. This rule forwards all traffic which is not /github/ towards
-port 801 of our local machine, where our apache culturize redirection rules resides.
-
-```
-server {
-    listen 80;
-    listen [::]:80;
-
-    location /github/ {
-            proxy_pass http://127.0.0.1:8000/;
-    }
-
-    location / {
-           proxy_pass http://127.0.0.1:801/;
-    }
-}
-```
-
-
-For Apache2:
-```
-<VirtualHost *:80>
-    ProxyPreserveHost On
-    ProxyRequests Off
-
-    ProxyPass /github/ http://127.0.0.1:8000/
-    ProxyPassReverse /github/ http://127.0.0.1:8000/
-
-    ProxyPass / http://127.0.0.1:801/
-    ProxyPassReverse / http://127.0.0.1:801/
-</VirtualHost>
-```
--->
-
-****
 ## Removing the configuration
 1. Run the command `docker-compose stop` inside the repository folder of the culturize docker
 2. Run the command `docker-compose rm` inside the repository folder
