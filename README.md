@@ -53,7 +53,7 @@ Depending on what webserver you are running, choose the right configuration.
 
 5. Start the docker containers with `docker-compose up -d`
 
-6. enable http_proxy mod and restart your webserver by typing following commands in your terminal ([More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04))
+6. enable http_proxy mod and restart your webserver by typing following commands in your terminal [More information](https://www.digitalocean.com/community/tutorials/how-to-rewrite-urls-with-mod_rewrite-for-apache-on-ubuntu-16-04)
 
 ```bash
 sudo a2enmod proxy
