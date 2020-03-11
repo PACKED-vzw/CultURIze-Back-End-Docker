@@ -42,7 +42,7 @@ Depending on what webserver you are running, choose the right configuration.
     - `sudo rm /apache2/sites-enabled/000-default.conf` or
     - `sudo mv /etc/apache2/sites-enabled/000-default.conf /etc/apache2/sites-enabled/000-default.conf.bak`
 
-2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/nginx/sites-available/` directory on your webserver. 
+2. place the configuration file found in this repository (/CultURIze-Back-End-Docker/docs/apache2-conf/)  in `/etc/apache2/sites-available/` directory on your webserver. 
     - `sudo mv /home/user/CultURIze-Back-End-Docker/docs/apache2-conf/culturize.conf /etc/apache2/sites-available/`
 
 3. Create symbolic link from /etc/apache2/sites-available to /etc/apache2/sites-enabled/ 
