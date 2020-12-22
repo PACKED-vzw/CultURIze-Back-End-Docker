@@ -17,7 +17,8 @@ Either add your user to the docker group on the system or run every next docker 
  2. And enter the directory of the cloned repository: `cd CultURIze-Back-End-Docker`
 
 ### Apache or Nginx?
-Depending on what webserver you are running, choose the right configuration.
+Depending on what webserver you are running on your docker host, choose the right configuration. In
+CultURIze always choose apache as this is used interanally in the docker container.
 
 #### Nginx
 
@@ -72,14 +73,20 @@ then 'add a webhook'. On this page you can fill in:
  * **secret :** may be left empty
  * **Which events would you like to trigger this webhook? :** set this to 'just push events'
  * Finaly make sur that the active checkbox is checked.
+
 Once this is saved each time you will push to your repository a POST method will be
 issued to your webhook with informations regarding the push event.
+Uppon saving the webhook GitHub will trigger a ping packet to the webhook, you should see a green
+checkmark with statu 200 OK on this ping. If you don't see this there is something wrong in the
+setup. You can resend this test ping packet from the Github webhook webpage.
 
 To check if it works you can push a change to your repository and you should notice
 on the server in your repository the folder apache-htaccess getting filled with the htaccess-files.
 
 ## Start creating PIDs with the CultURIze tool
 You're all set now! Everytime you'll upload PIDs to the repository for which you congured the webhook, it will automatically be published at [http://your-server-IP/$subdirectory/$PID](http://your-server-IP/subdirectory/PID), e.g. http://example.org/rembrand/work/1
+Remember that you always need to select Apache in the CultURIze tool with this docker setup as
+apache is used in the docker containers.
 
 ## Removing the configuration
 1. Run the command `docker-compose stop` inside the repository folder of the culturize docker
